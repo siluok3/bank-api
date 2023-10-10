@@ -22,3 +22,8 @@ Using the **Hexagonal Architecture** where we can find the following directories
 - Unit tests for the application business logic coverage 100% ✅
 ![coverage](src/main/resources/static/coverage.png)
 - Integration tests for the controllers to simulate a successful transaction ✅
+
+## Interact with the application
+In order to simplify things a [Makefile](Makefile) was created and by running the command `make start`
+that will spin up a Docker container where our latest image of our application will run on port `:8080`.
+Only prerequisite is having Docker running on the background on your machine
