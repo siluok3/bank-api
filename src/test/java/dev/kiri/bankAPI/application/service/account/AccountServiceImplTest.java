@@ -1,10 +1,12 @@
 package dev.kiri.bankAPI.application.service.account;
 
 import dev.kiri.bankAPI.adapter.persistence.AccountRepository;
+import dev.kiri.bankAPI.adapter.persistence.UserRepository;
 import dev.kiri.bankAPI.application.exception.DuplicateException;
 import dev.kiri.bankAPI.application.exception.InvalidRequestException;
 import dev.kiri.bankAPI.application.exception.NotFoundException;
 import dev.kiri.bankAPI.domain.Account;
+import dev.kiri.bankAPI.domain.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,12 +21,14 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class AccountServiceImplTest {
     @Mock private AccountRepository accountRepository;
+    @Mock private UserRepository userRepository;
     @InjectMocks private AccountServiceImpl accountService;
 
     @Test
     void testCreateAccount_Success() {
         Long userId = 1L;
         Account account = new Account(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
         when(accountRepository.findByUserId(userId)).thenReturn(Optional.empty());
         when(accountRepository.save(any(Account.class))).thenReturn(account);
 
@@ -34,9 +38,21 @@ class AccountServiceImplTest {
     }
 
     @Test
+    void testCreateAccount_UserNotFound() {
+        Long userId = 1L;
+        Account account = new Account(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        NotFoundException ex = assertThrows(NotFoundException.class, () -> accountService.createAccount(userId));
+        assertEquals("User does not exist for id: "+userId, ex.getMessage());
+        verify(accountRepository, never()).save(account);
+    }
+
+    @Test
     void testCreateAccount_DuplicateException() {
         Long userId = 1L;
         Account account = new Account(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
         when(accountRepository.findByUserId(userId)).thenReturn(Optional.of(account));
 
         DuplicateException ex = assertThrows(DuplicateException.class, () -> accountService.createAccount(userId));

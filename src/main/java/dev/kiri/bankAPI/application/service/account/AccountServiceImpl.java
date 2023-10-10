@@ -1,6 +1,7 @@
 package dev.kiri.bankAPI.application.service.account;
 
 import dev.kiri.bankAPI.adapter.persistence.AccountRepository;
+import dev.kiri.bankAPI.adapter.persistence.UserRepository;
 import dev.kiri.bankAPI.application.exception.DuplicateException;
 import dev.kiri.bankAPI.application.exception.InvalidRequestException;
 import dev.kiri.bankAPI.application.exception.NotFoundException;
@@ -10,13 +11,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(
+            AccountRepository accountRepository,
+            UserRepository userRepository
+    ) {
         this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Account createAccount(Long userId) {
+        if (userRepository.findById(userId).isEmpty()) {
+            throw new NotFoundException("User does not exist for id: "+userId);
+        }
         if (accountRepository.findByUserId(userId).isPresent()) {
             throw new DuplicateException("Account already exists for user id: "+userId);
         }

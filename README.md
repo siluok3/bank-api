@@ -21,4 +21,4 @@ Using the **Hexagonal Architecture** where we can find the following directories
 ## Testing
 - Unit tests for the application business logic coverage 100% ✅
 ![coverage](src/main/resources/static/coverage.png)
-- Integration tests for the controllers TO BE ADDED
+- Integration tests for the controllers to simulate a successful transaction ✅
