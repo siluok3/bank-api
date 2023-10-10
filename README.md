@@ -10,13 +10,15 @@ Using the **Hexagonal Architecture** where we can find the following directories
 - `domain`: Domain Entities
 
 ## REST API endpoints
-- `POST /users`: Register new users ✅
-- `GET /users/{userId}`: Get user by id ✅
-- `POST /accounts`: Create new accounts (wallets) ✅
-- `POST /accounts/{accountId}/deposit`: Deposit money into an account ✅
-- `GET /accounts/{accountId}`: View account balance and transactions ❌(need to added transactions)
-- `POST /transactions`: Transfer money from one account to another ❌
+- `POST /api/v1/users`: Register new user ✅
+- `GET /api/v1/users/{userId}`: Get user by id ✅
+- `POST /api/v1/accounts`: Create new account (wallets) ✅
+- `POST /api/v1/accounts/{accountId}/deposit`: Deposit money into an account ✅
+- `GET /api/v1/accounts/{accountId}`: View account balance ✅
+- `GET /api/v1/transactions/account/{accountId}`: View account movements (transactions) ✅
+- `POST /api/v1/transactions`: Transfer money from one account to another ✅
 
 ## Testing
-- Unit tests for the business logic 
-- Integration tests for the controllers
+- Unit tests for the application business logic coverage 100% ✅
+![coverage](src/main/resources/static/coverage.png)
+- Integration tests for the controllers TO BE ADDED

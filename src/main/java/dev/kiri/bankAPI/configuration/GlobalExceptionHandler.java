@@ -1,6 +1,7 @@
 package dev.kiri.bankAPI.configuration;
 
 import dev.kiri.bankAPI.application.exception.DuplicateException;
+import dev.kiri.bankAPI.application.exception.InsufficientFundsException;
 import dev.kiri.bankAPI.application.exception.InvalidRequestException;
 import dev.kiri.bankAPI.application.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<Map<String, String>> handleInvalidRequestException(InvalidRequestException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(InsufficientFundsException.class)
+    public ResponseEntity<Map<String, String>> handleInsufficientFundsException(InsufficientFundsException ex) {
         Map<String, String> errors = new HashMap<>();
         errors.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);

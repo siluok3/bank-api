@@ -2,12 +2,10 @@ package dev.kiri.bankAPI.adapter.controller;
 
 import dev.kiri.bankAPI.application.service.account.AccountService;
 import dev.kiri.bankAPI.domain.Account;
-import dev.kiri.bankAPI.domain.dto.AccountDepositDTO;
+import dev.kiri.bankAPI.domain.dto.account.AccountDepositDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
