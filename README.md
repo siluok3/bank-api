@@ -18,6 +18,13 @@ Using the **Hexagonal Architecture** where we can find the following directories
 - `GET /api/v1/transactions/account/{accountId}`: View account movements (transactions) ✅
 - `POST /api/v1/transactions`: Transfer money from one account to another ✅
 
+### Accessing Swagger UI
+The API documentation is available through the Swagger UI interface, allowing you to explore and interact with the available endpoints.
+
+URL: http://localhost:8080/swagger-ui.html
+
+Instructions: Navigate to the Swagger UI URL in your browser to view and test the available API endpoints.
+
 ## Testing
 - Unit tests for the application business logic coverage 100% ✅
 ![coverage](src/main/resources/static/coverage.png)
